@@ -1,0 +1,19 @@
+<%# Takes f %>
+
+<div class="bar">
+  <ul class="items count-<%= f.object.items.size %>" id="items-<%= @page_object.urn %>"><%# Sortable.create requires the div to have an ID :( %>
+    <% (f.object.items + (f.object.added_items || [])).each do |item| %>
+      <%= render :partial => 'items/embedded_fields', :locals => {:f => f, :item => item } unless item.destroy_association? %>
+    <% end %>
+  </ul>
+  <div class="after-ul"></div>
+</div>
+
+<div class="add-item-box">
+  <a class="add-item" title="Add another link to the navigation bar.">Add Navigation Item</a>
+</div>
+
+<div class="new_item_code" style="display:none">
+  <% # TODO HERE how do we prevent these fields from being parsed by the javascript %>
+  <%= render(:partial => 'items/embedded_fields', :locals => {:f => f }) %>
+</div>

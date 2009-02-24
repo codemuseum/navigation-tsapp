@@ -1,0 +1,8 @@
+<% fields_for_page_object do |f| -%>
+  <% fields_for "#{f.object_name}[assigned_nav]", @page_object.nav do |nf| -%>
+      <%= render :partial => 'navs/fields', :locals => {:f => nf}%>
+  <% end -%>
+<% end -%>
+
+<% javascripts 'prototype', 'effects', 'dragdrop', 'nav-items-edit' %>
+<% stylesheets 'navigation', 'navigation-edit' %>

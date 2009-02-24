@@ -1,0 +1,18 @@
+<h1>Listing navs</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for nav in @navs %>
+  <tr>
+    <td><%= link_to 'Show', nav %></td>
+    <td><%= link_to 'Edit', edit_nav_path(nav) %></td>
+    <td><%= link_to 'Destroy', nav, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New nav', new_nav_path %>
