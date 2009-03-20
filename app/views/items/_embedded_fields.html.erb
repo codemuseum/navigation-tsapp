@@ -3,7 +3,6 @@
 <% fields_for "#{f.object_name}[assigned_items][]", item do |sf| -%>
   <li class="item <%=h item.class_name %>" id="<%= item.new_record? ? '' : "navigation_item_#{item.id}" %>">
     <div class="remove ts-close-button"><a title="Remove navigation item.">Remove</a></div>
-    <div class="drag"><a class="drag-handle" title="Click and drag to reorder the items.">Re-order</a></div>
     <div class="info">
       <%= sf.hidden_field :position, :class => 'position-value', :index => nil %>
       <div class="nowrap"><%= sf.label :title, nil, :title => 'The underlined text that is displayed to the user to click.' %> <%= sf.text_field :title, :index => nil %></div>

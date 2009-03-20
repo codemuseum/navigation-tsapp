@@ -12,52 +12,46 @@ var NavigationEdit = {
         var navigationBox = $(navBox);
         var self = this;
         
-        this.itemsEl = navigationBox.select('ul.items')[0];
-        var creationCode = navigationBox.select('div.new_item_code')[0].remove().innerHTML;
+        this.itemsEl = navigationBox.find('ul.items');
+        var creationCode = navigationBox.find('div.new_item_code').remove().get(0).innerHTML;
 
-        this.itemsEl.select('li.item').each(function(el) { self._observeItem(el); });
-        navigationBox.select('.add-item')[0].observe('click', 
-          function(ev) { Event.stop(ev); self._addItem(creationCode); self._makeSortable(); }
-        );
+        this.itemsEl.find('li.item').each(function(i) { self._observeItem($(this)); });
+        navigationBox.find('.add-item').click(function(ev) {
+          ev.preventDefault(); self._addItem(creationCode); self._makeSortable(); return false;
+        });
         this._makeSortable();
-        navigationBox.ancestors().detect(function(anc) { return anc.tagName == 'FORM' }).observe('submit', function(ev) { self._saveOrder(); });
+        navigationBox.parents('form').bind('submit', function(ev) { self._saveOrder(); });
       },
       _addItem: function(html) {
         var newEl=$(document.createElement('div'));
-        newEl.update(html);
-        newEl = newEl.firstDescendant().remove();
+        newEl.html(html);
+        newEl = newEl.find("*:first").remove();
         this._addToCount(1);
-        this.itemsEl.appendChild(newEl);
+        this.itemsEl.get(0).appendChild(newEl.get(0));
         this._observeItem(newEl);
-        newEl.select('input')[1].focus();
+        newEl.find('input')[1].focus();
       },
       _observeItem: function(item) {
-        var remove = item.select('.remove')[0];
+        var remove = item.find('.remove a');
         var self = this;
-        remove.observe('click', function() { item.remove(); self._addToCount(-1); });
+        remove.click(function() { item.remove(); self._addToCount(-1); });
         TS.Assets.Selector.register(item);
       },
       _makeSortable: function() {  
-        var sle = this.itemsEl;
-        Sortable.create(sle, { handle:'drag-handle', constraint:null });
+        this.itemsEl.sortable({ items:'li.item' });
+        this.itemsEl.disableSelection();
       },
       _saveOrder: function() {
-        var currentPosition = 0;
-        this.itemsEl.select('div.item').each(function(item) {
-          item.select('input.position-value')[0].value = currentPosition;
-          currentPosition++;
+        this.itemsEl.find('div.item').each(function(i) {
+          $(this).find('input.position-value:first').get(0).value = i;
         });
       },
       _addToCount: function(amount) {
-        var self = this;
         var baseName = 'count-';
-        this.itemsEl.classNames().each(function(className) {
-          if (className.startsWith(baseName)) {
-            var newCount = baseName + (parseInt(className.substring(baseName.length)) + amount);
-            self.itemsEl.removeClassName(className);
-            self.itemsEl.addClassName(newCount);
-          }
-        });
+        var oldCount = parseInt(this.itemsEl.get(0).className.match(new RegExp('(\\s|^)count-([^\\s]*)(\\s|$)'))[2]);
+        var newCount = oldCount + amount;
+        this.itemsEl.removeClass(baseName + oldCount);
+        this.itemsEl.addClass(baseName + newCount);
       }
     };
     navObject.init(navigationEl);

@@ -7,8 +7,8 @@ form .app-navigation ul {overflow:visible;}
 .app-navigation .edit-items-box a,
 .app-navigation .add-item-box a { display:inline; cursor:pointer;  }
 
-.app-navigation ul li .drag {position:absolute; top: -5px; left: 30px; width: 50px; height:10px; font-size:1px; letter-spacing:-1px; overflow:hidden;}
-.app-navigation ul li .drag a {cursor:move; display:block; width:50px; height:10px; color:transparent; background: transparent url(/navigation/images/dragbar.png) 0px 0px no-repeat;}
-
 .app-navigation ul li .info { padding-top: 10px; padding-left:10px;}
 
+.app-navigation ul li { cursor:move; position:relative; }
+
+.app-navigation a.button { cursor:pointer; border:1px solid #aaa; -moz-border-radius: 5px; -webkit-border-radius: 5px; padding:2px 5px; }

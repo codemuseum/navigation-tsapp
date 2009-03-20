@@ -18,4 +18,4 @@ config.action_mailer.raise_delivery_errors = false
 
 
 # Enable serving of images, stylesheets, and javascripts from an asset server
-config.action_controller.asset_host                  = "http://thrivesmart.localhost:3006"
+config.action_controller.asset_host                  = "http://thrivesmart.localhost:3001"
