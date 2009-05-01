@@ -100,6 +100,7 @@ class PageObjectsController < ApplicationController
         flash[:notice] = 'PageObject was successfully updated.'
         format.html { redirect_to(@page_object) }
         format.xml  { head :ok }
+        format.tson  { head :ok }
       else
         render_to_page_object
         format.html { render :action => "edit" }
